@@ -1,0 +1,100 @@
+PLAYBOOK DE COPY — GATILHOS HUMANOS E VOCABULÁRIO POR PRODUTO
+(referência de apoio para o agente copywriter — não é lei, é técnica de escrita)
+
+====================================================================
+1. REGRA DE OURO: ONDE O GATILHO PODE APONTAR
+====================================================================
+Todo gatilho mental clássico (Cialdini: reciprocidade, escassez, urgência, prova
+social, autoridade, afeição/conexão) continua válido — a questão é PRA ONDE ele
+aponta. Aponte sempre para o CONTEÚDO, a RODADA, o ENTRETENIMENTO, a HISTÓRIA do
+criador. Nunca para a aposta em si, dinheiro ou resultado financeiro.
+
+Compliant (aponta pro conteúdo/experiência):
+- Curiosidade: "eu quase não acreditei no que rolou nessa rodada"
+- Antecipação: "guarda esse vídeo até o final"
+- Prova social sobre audiência/entretenimento: "toda live que eu jogo isso rola"
+- Autoridade sobre conhecimento do jogo: "depois de acompanhar centenas de rodadas
+  eu reparei um padrão de comportamento do jogo, não de resultado garantido"
+- Conexão/afeição: humor, gírias, causos pessoais, se abrir sobre um perrengue
+- Reciprocidade: entregar valor de conteúdo antes de pedir engajamento
+
+PROIBIDO (o que a Portaria Interministerial 73/2026 e o dossiê já vetam — nunca usar,
+independente de quão "natural" o gatilho pareça):
+- Urgência/escassez em cima da aposta ("entra agora", "última call", "não perca
+  essa rodada")
+- Promessa de ganho fácil, garantido, ou "fórmula que nunca falha"
+- Aposta como renda, emprego, investimento, forma de pagar conta/dívida
+- Exibir valores ganhos ou "prova de banca" como prova social de lucro
+- Alegar controle sobre o resultado por habilidade/leitura de padrão do jogo
+  (jogos de cassino como Aviator são de resultado aleatório — sugerir "método"
+  ou "estratégia infalível" é proibido, mesmo que dito de forma informal)
+
+====================================================================
+2. ESTRUTURA DE ROTEIRO CURTO (Reels / TikTok / Stories / Shorts)
+====================================================================
+Regra prática: 3 segundos pra fisgar, ~15 segundos pra entregar valor/entretenimento,
+~5 segundos pra fechar. Estrutura:
+
+  GANCHO (0-3s) — pergunta, afirmação inesperada ou promessa de valor sobre o
+  CONTEÚDO ("você sabia que...", "isso quase ninguém percebe...", "vou te mostrar
+  o que rolou..."). Nunca gancho em cima de "vou te ensinar a ganhar dinheiro".
+
+  CORPO (contexto/entretenimento) — a história, a rodada, a reação, o causo. É
+  aqui que entra humor, gíria, timing, edição — o que faz o vídeo ser visto até
+  o fim. Pode comentar o jogo, a emoção, a comunidade, sem prometer resultado.
+
+  ADVERTÊNCIA OBRIGATÓRIA — encaixada de forma natural dentro da fala ou como
+  card visual claro (nunca sussurrada ou cortada), lembrando que precisa ocupar
+  pelo menos 10% do tempo/tamanho da peça.
+
+  FECHO/CTA (últimos segundos) — chamada para ação sobre o CONTEÚDO ("segue pra
+  não perder o próximo", "comenta o que você acha", "manda pra quem também
+  curte"), nunca sobre apostar.
+
+Framework alternativo pra roteiros mais longos (lives, vídeos de 3-5min): PASTOR
+- Problema: o que motivou o vídeo (ex: "muita gente me pergunta como eu decido
+  quando sacar")
+- Amplificação: por que isso importa / a tensão da situação
+- Solução-História: conta o que aconteceu, com contexto e emoção — não uma
+  fórmula, uma experiência
+- Transformação: o que mudou no jeito de curtir o jogo (não no saldo)
+- Oferta: convite pra continuar acompanhando o criador (conteúdo, não aposta)
+- Resposta: CTA de engajamento
+
+====================================================================
+3. VOCABULÁRIO POR VERTICAL — nunca misturar
+====================================================================
+Antes de escrever qualquer coisa, identifique de qual produto o conteúdo original
+fala. Se não estiver claro, prefira o vocabulário mais genérico de cassino/jogo
+online em vez de cair automaticamente em termos de apostas esportivas.
+
+AVIATOR / CRASH GAMES (Aviator, Spaceman, JetX e similares)
+Termos naturais: avião, decolou, voou, multiplicador, crashou/caiu, saque
+automático, cash out, rodada, vela verde/vermelha, gestão de banca, entrada,
+"saiu antes de cair", auto cash out.
+Nunca usar aqui: odd, handicap, escalação, múltipla de jogos, time, campeonato —
+isso é vocabulário de apostas esportivas e soa estranho/errado em conteúdo de
+Aviator (foi o erro identificado nessa rodada de testes).
+
+APOSTAS ESPORTIVAS
+Termos naturais: odd, palpite, prognóstico, múltipla, handicap, green/red,
+escalação, mercado, ao vivo/live betting.
+
+SLOTS / CAÇA-NÍQUEIS ONLINE
+Termos naturais: giro, rodada grátis, bônus, RTP, símbolo, feature, jackpot
+(sem prometer que vai sair).
+
+CASSINO AO VIVO (mesas com dealer real)
+Termos naturais: mesa, dealer, rodada ao vivo, blackjack/roleta/bacará conforme o
+jogo específico citado.
+
+====================================================================
+4. GANCHOS DE ABERTURA GENÉRICOS (adaptar ao produto identificado, não copiar puro)
+====================================================================
+- "Você sabia que [fato curioso sobre o jogo/rodada]?"
+- "Isso quase ninguém repara quando joga [produto]..."
+- "Deixa eu te contar o que aconteceu nessa rodada..."
+- "3 segundos: [afirmação inesperada sobre o conteúdo]"
+- "Eu não ia postar isso, mas..."
+Todos ganchos apontam pra curiosidade sobre o CONTEÚDO — nunca pra "vem ganhar
+dinheiro comigo".

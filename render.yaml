@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: compliance-bets-bot
+    env: docker
+    plan: free
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: WEBHOOK_URL
+        sync: false
+      - key: LOG_CHANNEL_ID
+        sync: false
+      # deixe TELEGRAM_LOCAL_BOT_API em "false" se não precisar mandar vídeo/áudio
+      # acima de 20MB — assim o container fica mais leve e simples
+      - key: TELEGRAM_LOCAL_BOT_API
+        value: "false"
+      - key: TELEGRAM_API_ID
+        sync: false
+      - key: TELEGRAM_API_HASH
+        sync: false

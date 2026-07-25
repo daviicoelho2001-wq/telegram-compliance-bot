@@ -13,6 +13,20 @@ crashou) e você escrever sobre "odds", "escalação" ou "múltipla de jogos", o
 fica inútil, porque não é isso que o expert faz. Nunca aplique vocabulário de apostas
 esportivas em conteúdo que não é sobre apostas esportivas.
 
+PASSO 0.5 — ANCORE NO QUE REALMENTE ACONTECEU NESSE CONTEÚDO, NÃO NUM TEMPLATE GENÉRICO
+Antes de escrever, extraia do conteúdo original pelo menos 2-3 elementos concretos e
+específicos DESSE vídeo/áudio: a reação exata do expert, uma frase marcante que ele
+disse, o que aconteceu na rodada/jogada, um causo, um número de rodadas, uma piada, um
+timing de corte. Esses elementos (os que não violarem nenhuma norma) têm que aparecer no
+roteiro, preservados perto do jeito que foram ditos — não substituídos por uma versão
+genérica do mesmo gancho. Se dois roteiros seus (de vídeos diferentes) puderem ser trocados
+entre si sem ninguém notar, você errou: o roteiro tem que ser claramente sobre O QUE
+ACONTECEU NESSE conteúdo específico, não um template reaproveitável.
+Evite frases de preenchimento que servem pra qualquer vídeo, tipo "quero compartilhar isso
+com vocês", "deixa eu te contar o que aconteceu" (sem dizer o quê), "muita gente me
+pergunta" (sem a pergunta real) — só use esse tipo de frase se for literalmente próxima do
+que o expert disse. Prefira sempre o detalhe concreto e específico à frase-molde bonita.
+
 REGRAS
 1. Resolva todos os achados 🔴 e 🟡 do parecer. Achados 🟢 são opcionais — aplique se
    não atrapalhar o tom.
@@ -23,7 +37,11 @@ REGRAS
    risca, mesmo que um gatilho proibido pareça "mais forte" ou mais familiar ao nicho.
 3. Mantenha a voz do expert original: gírias, ritmo, humor, jeito de falar, edição
    mencionada (cortes, calls, reações). O roteiro final tem que soar como se o próprio
-   expert tivesse escrito — nunca institucional, nunca engessado, nunca "juridiquês".
+   expert tivesse escrito — nunca institucional, nunca engessado, nunca "juridiquês", e
+   nunca morno/genérico. Se o roteiro que você escreveu poderia ter sido gerado sem
+   olhar o conteúdo original, reescreva — ele tem que ser puxado com força pelo gancho
+   real do vídeo, específico o bastante pra prender atenção, não uma versão educada e
+   sem graça do original.
 4. Use a estrutura de gancho (3s) + corpo + advertência natural + fecho, do playbook,
    pra formatos curtos. Pra formatos longos, pode usar o framework PASTOR do playbook.
 5. Inclua a advertência obrigatória (a frase exata que está no dossiê) encaixada na
@@ -57,6 +75,10 @@ Produto identificado: [Aviator/crash | Apostas esportivas | Slots | Cassino ao v
 
 O que este roteiro resolve:
 - [lista curta, ligando cada ajuste a um achado do parecer]
+
+Elementos do conteúdo original preservados:
+- [liste os 2-3 elementos concretos e específicos DESSE vídeo/áudio que você manteve —
+  a reação, a frase, o causo, o momento exato — não o gatilho genérico, o fato real]
 
 Gatilhos usados:
 - [liste os 2-4 gatilhos do playbook que você aplicou e onde, ex: "curiosidade no

@@ -210,12 +210,9 @@ async def _run_pipeline(update: Update, context: ContextTypes.DEFAULT_TYPE, cont
             await msg.reply_text("Roteiro sugerido:")
             for i in range(0, len(roteiro), MAX_TELEGRAM_CHUNK):
                 await msg.reply_text(roteiro[i : i + MAX_TELEGRAM_CHUNK])
-
-            if not revisao_aprovada:
-                await msg.reply_text("O que a última revisão ainda apontou:")
-                pendencias = resultado["revisao_parecer"]
-                for i in range(0, len(pendencias), MAX_TELEGRAM_CHUNK):
-                    await msg.reply_text(pendencias[i : i + MAX_TELEGRAM_CHUNK])
+            # não reenvia o parecer completo da revisão aqui — ele repetiria a mesma
+            # estrutura do parecer original já mostrado no passo 2. Se ainda ficou
+            # pendência, o Guardião (próximo passo) já cobre isso no veredito final.
         except Exception as exc:
             logger.exception("Falha ao gerar/revisar roteiro")
             await msg.reply_text(f"Não consegui gerar o roteiro alternativo agora: {exc}")

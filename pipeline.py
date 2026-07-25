@@ -3,9 +3,16 @@ Pipeline de compliance — versão 100% gratuita.
 
 Tudo aqui roda em cima de free tiers sem cartão de crédito:
 - Groq (LLM de texto + transcrição de áudio/vídeo) — https://console.groq.com
+- Gemini (LLM de texto para Pesquisador/Guardião — divide a carga do Groq, cada
+  provedor tem cota diária separada) — https://aistudio.google.com
 - Tavily (busca na web para manter o dossiê legal atualizado) — https://tavily.com
 
 Usado pelo bot.py.
+
+Roteamento de modelo por etapa: Analista e Copywriter (decisão de compliance crítica +
+prompt mais pesado, com dossiê+playbook) ficam no Groq. Pesquisador e Guardião (tarefas
+mais leves/esporádicas) ficam no Gemini — assim as duas cotas diárias somam em vez de
+uma etapa consumir o teto que as outras precisam.
 """
 import logging
 import os
@@ -15,6 +22,8 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
+from google import genai
+from google.genai import types as genai_types
 from groq import APIStatusError, RateLimitError
 
 logger = logging.getLogger("compliance-bot.usage")
@@ -28,6 +37,8 @@ _usage_stats = {
     "chat_total_tokens": 0,
     "transcription_requests": 0,
     "transcription_audio_seconds": 0.0,
+    "gemini_requests": 0,
+    "gemini_total_tokens": 0,
 }
 
 BASE_DIR = Path(__file__).parent
@@ -48,6 +59,13 @@ GUARDIAO_PROMPT = (BASE_DIR / "prompts" / "guardiao_prompt.txt").read_text(encod
 # para "llama-3.1-8b-instant" (mais permissivo: 14.400 req/dia) via variável de ambiente GROQ_MODEL,
 # ou avalie "openai/gpt-oss-120b" para respostas de raciocínio mais forte.
 GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+
+# Pesquisador e Guardião rodam no Gemini (cota diária separada da do Groq). Modelo padrão
+# é o alias "-latest" da Google, que segue automaticamente o Flash estável mais recente —
+# evita ficar preso a um nome de modelo que pode ser descontinuado.
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
+_gemini_client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
 
 TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY")  # opcional — sem ela, o dossiê não é verificado por busca
 
@@ -179,8 +197,45 @@ def _groq_chat(groq_client, system_prompt: str, user_msg: str, max_tokens: int =
             time.sleep((wait_s or 15.0) + 1)
 
 
-def refresh_dossie(groq_client) -> str:
-    """Roda o agente pesquisador (Tavily + Groq) e salva o dossiê atualizado."""
+def _gemini_chat(system_prompt: str, user_msg: str, max_tokens: int = 1500, max_retries: int = 3) -> str:
+    """Mesmo papel do _groq_chat, mas pro Gemini — usado por Pesquisador e Guardião pra não
+    disputar a cota diária do Groq com Analista/Copywriter."""
+    if _gemini_client is None:
+        raise RuntimeError("GEMINI_API_KEY não configurada — sem ela, Pesquisador e Guardião não rodam.")
+
+    for attempt in range(max_retries):
+        try:
+            response = _gemini_client.models.generate_content(
+                model=GEMINI_MODEL,
+                contents=user_msg,
+                config=genai_types.GenerateContentConfig(
+                    system_instruction=system_prompt,
+                    max_output_tokens=max_tokens,
+                    temperature=0.2,
+                ),
+            )
+            usage = getattr(response, "usage_metadata", None)
+            if usage:
+                _usage_stats["gemini_requests"] += 1
+                _usage_stats["gemini_total_tokens"] += usage.total_token_count or 0
+                logger.info(
+                    "Gemini chat (%s): %d tokens | acumulado na sessão: %d requests, %d tokens",
+                    GEMINI_MODEL, usage.total_token_count or 0,
+                    _usage_stats["gemini_requests"], _usage_stats["gemini_total_tokens"],
+                )
+            text = (response.text or "").strip()
+            if not text:
+                raise RuntimeError(f"Gemini devolveu resposta vazia (finish_reason pode ter cortado por max_output_tokens={max_tokens}).")
+            return text
+        except Exception as exc:
+            if attempt == max_retries - 1:
+                raise
+            logger.warning("Falha no Gemini (tentativa %d/%d): %s", attempt + 1, max_retries, exc)
+            time.sleep(10.0)
+
+
+def refresh_dossie() -> str:
+    """Roda o agente pesquisador (Tavily + Gemini) e salva o dossiê atualizado."""
     _ensure_dirs()
     search_context = _tavily_search_context()
 
@@ -199,16 +254,18 @@ def refresh_dossie(groq_client) -> str:
             "recente e pode estar desatualizado — recomende checagem manual."
         )
 
-    dossie_text = _groq_chat(groq_client, PESQUISADOR_PROMPT, user_msg, max_tokens=2200)
+    # o Gemini gasta parte do orçamento "pensando" internamente antes de responder (contado
+    # dentro de max_tokens) — precisa de bem mais margem que o Groq pro mesmo tamanho de saída
+    dossie_text = _gemini_chat(PESQUISADOR_PROMPT, user_msg, max_tokens=8000)
     if dossie_text:
         DOSSIE_PATH.write_text(dossie_text, encoding="utf-8")
     return dossie_text
 
 
-def get_dossie(groq_client, force: bool = False) -> str:
+def get_dossie(force: bool = False) -> str:
     if force or dossie_is_stale():
         try:
-            return refresh_dossie(groq_client)
+            return refresh_dossie()
         except Exception as exc:  # nunca deixa a análise travar por falha na atualização
             if DOSSIE_PATH.exists():
                 return DOSSIE_PATH.read_text(encoding="utf-8") + (
@@ -432,10 +489,10 @@ def save_roteiro(roteiro_text: str, expert_name: str) -> Path:
     return fname
 
 
-def guardian_review(groq_client, dossie_text: str, parecer_text: str, roteiro_text: str, meta: dict) -> str:
-    """Roda o agente Guardião: última checagem de qualidade do pacote inteiro (parecer +
-    roteiro, se houver) antes de qualquer envio ao Telegram. Não refaz a análise de
-    compliance do zero — só valida consistência, vocabulário, trocas de palavra e
+def guardian_review(dossie_text: str, parecer_text: str, roteiro_text: str, meta: dict) -> str:
+    """Roda o agente Guardião (Gemini): última checagem de qualidade do pacote inteiro
+    (parecer + roteiro, se houver) antes de qualquer envio ao Telegram. Não refaz a análise
+    de compliance do zero — só valida consistência, vocabulário, trocas de palavra e
     completude entre as etapas anteriores."""
     roteiro_bloco = roteiro_text if roteiro_text else (
         "(nenhum roteiro foi gerado — o conteúdo original já foi aprovado sem necessidade de ajuste)"
@@ -452,7 +509,7 @@ def guardian_review(groq_client, dossie_text: str, parecer_text: str, roteiro_te
         f"Canal: {meta.get('canal', 'Telegram')}\n"
         f"Data: {meta.get('data', datetime.now().strftime('%d/%m/%Y %H:%M'))}\n"
     )
-    return _groq_chat(groq_client, GUARDIAO_PROMPT, user_msg, max_tokens=700)
+    return _gemini_chat(GUARDIAO_PROMPT, user_msg, max_tokens=3000)
 
 
 def extract_guardiao_veredito(guardiao_text: str) -> str:

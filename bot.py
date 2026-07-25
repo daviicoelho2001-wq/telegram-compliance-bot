@@ -60,7 +60,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def atualizar_compliance(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Atualizando base de compliance (pode levar ~30s)...")
     try:
-        pipeline.get_dossie(groq_client, force=True)
+        pipeline.get_dossie(force=True)
         await update.message.reply_text("Base de compliance atualizada.")
     except Exception as exc:
         logger.exception("Falha ao atualizar dossiê")
@@ -159,7 +159,7 @@ async def _run_pipeline(update: Update, context: ContextTypes.DEFAULT_TYPE, cont
     await msg.reply_text("Cruzando com a base de compliance e analisando...")
 
     try:
-        dossie = pipeline.get_dossie(groq_client)
+        dossie = pipeline.get_dossie()
         meta = {
             "expert": user.full_name if user else "desconhecido",
             "canal": "Telegram",
@@ -226,7 +226,7 @@ async def _run_pipeline(update: Update, context: ContextTypes.DEFAULT_TYPE, cont
     guardiao_parecer = None
     guardiao_veredito = "desconhecido"
     try:
-        guardiao_parecer = pipeline.guardian_review(groq_client, dossie, parecer, roteiro or "", meta)
+        guardiao_parecer = pipeline.guardian_review(dossie, parecer, roteiro or "", meta)
         guardiao_veredito = pipeline.extract_guardiao_veredito(guardiao_parecer)
     except Exception as exc:
         logger.exception("Falha na revisão final do Guardião")
